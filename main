@@ -1,0 +1,50 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.task;
+
+/**
+ *
+ * @author nkomo
+ */
+public class Main {
+    public static void main(String[] args) {
+        Task task1 = new Task("Task 1", 1, 10);
+        Task task2 = new Task("Task 2", 2, 15);
+        
+        Thread worker1 = new Thread(() -> {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Task name: " + task1.getTaskName() + ", task ID: " + task1.getTaskId() + ", task wage: " + task1.getTaskWage());
+        });
+        
+        Thread worker2 = new Thread(() -> {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Task name: " + task2.getTaskName() + ", task ID: " + task2.getTaskId() + ", task wage: " + task2.getTaskWage() + ", additional info: ...");
+        });
+        
+        System.out.println("Worker 1 priority: " + worker1.getPriority());
+        System.out.println("Worker 2 priority: " + worker2.getPriority());
+        
+        worker1.start();
+        worker2.start();
+        
+        try {
+            worker1.join();
+            worker2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        
+        System.out.println("Worker 1 status: " + worker1.getName() + ", " + worker1.getState());
+        System.out.println("Worker 2 status: " + worker2.getName() + ", " + worker2.getState());
+    }
+}
